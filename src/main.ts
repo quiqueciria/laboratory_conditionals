@@ -34,77 +34,58 @@ function dameCarta() {
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
 
 function pintarCarta(cartaGenerada: number) {
-  if (cartaGenerada === 1) {
-    document.getElementById("cartas").src = "/src/img/1_as-copas.jpg";
+  switch (cartaGenerada) {
+    case 1:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/1_as-copas.jpg";
+      break;
+    case 2:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/2_dos-copas.jpg";
+      break;
+    case 3:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/3_tres-copas.jpg";
+      break;
+    case 4:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/4_cuatro-copas.jpg";
+      break;
+    case 5:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/5_cinco-copas.jpg";
+      break;
+    case 6:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/6_seis-copas.jpg";
+      break;
+    case 7:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/7_siete-copas.jpg";
+      break;
+    case 10:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/10_sota-copas.jpg";
+      break;
+    case 11:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/11_caballo-copas.jpg";
+      break;
+    case 12:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/12_rey-copas.jpg";
+      break;
+    default:
+      (document.getElementById("cartas") as HTMLImageElement).src =
+        "/src/img/back.jpg";
+      break;
   }
-  if (cartaGenerada === 2) {
-    document.getElementById("cartas").src = "/src/img/2_dos-copas.jpg";
-  }
-  if (cartaGenerada === 3) {
-    document.getElementById("cartas").src = "/src/img/3_tres-copas.jpg";
-  }
-  if (cartaGenerada === 4) {
-    document.getElementById("cartas").src = "/src/img/4_cuatro-copas.jpg";
-  }
-  if (cartaGenerada === 5) {
-    document.getElementById("cartas").src = "/src/img/5_cinco-copas.jpg";
-  }
-  if (cartaGenerada === 6) {
-    document.getElementById("cartas").src = "/src/img/6_seis-copas.jpg";
-  }
-  if (cartaGenerada === 7) {
-    document.getElementById("cartas").src = "/src/img/7_siete-copas.jpg";
-  }
-  if (cartaGenerada === 10) {
-    document.getElementById("cartas").src = "/src/img/10_sota-copas.jpg";
-  }
-  if (cartaGenerada === 11) {
-    document.getElementById("cartas").src = "/src/img/11_caballo-copas.jpg";
-  }
-  if (cartaGenerada === 12) {
-    document.getElementById("cartas").src = "/src/img/12_rey-copas.jpg";
-  }
+
+  console.log(cartaGenerada);
 }
-/*
-const mostrarCartas = () => {
-  const imagen = document.getElementById("cartas");
-
-  if (imagen) {
-    document.getElementById("cartas").src = "/src/img/2_dos-copas.jpg";
-  }
-  if (dameCarta == 1) {
-    cartas.innerHTML = '<img src=https://image.ibb.co/cQKOhc/dice1.png>';
-}
-
-
-
-  if (imagen === document.getElementById("cartas").src = "/src/img/2_dos-copas.jpg";) {
-    imagen = 2;
-  }
-};
-*/
-
-/*
-function mostrarcartas() {
-  //IDENTIFICA EL DIV DE LAS CARTAS
-  const divCartas = (<HTMLInputElement>document.getElementById("cartas")).src;
-
-  //LEE EL VALOR DEL DIV DE LAS CARTAS
-  const valorCartas = divCartas;
-
-  // MUESTRA EL VALOR DE LAS CARTAS
-  const;
-}
-*/
 
 // EL BOTÓN NOS MUESTRA EL VALOR DE LA CARTA
 const botonValor = document.getElementById("botonDameCarta");
-
-/*
-if (botonValor) {
-  botonValor.addEventListener("click", mostrarCartas);
-}
-*/
 
 if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
