@@ -1,32 +1,22 @@
 import "./style.css";
 
-// PUNTUACIÓN
-const puntuacion = (): number => 0;
-
-// ALMACENAR PUNTUACIÓN
-const almacenarPuntuacion: number = puntuacion();
-
-// MOSTRAR PUNTUACIÓN EN EL DIV
-const elementoPuntuacion = document.getElementById("puntuacion");
-
-if (elementoPuntuacion) {
-  elementoPuntuacion.innerHTML = `${almacenarPuntuacion} es la puntuacion`;
-}
-
-// MOSTRAR RESULTADO PUNTUACIÓN EN CONSOLA
-console.log(almacenarPuntuacion);
+// GENERAR VALOR
+const generarValorCarta = (): number => Math.floor(Math.random() * 10) + 1;
 
 ///////////// ----------------------------- FUNCIÓN DAME CARTA
 function dameCarta() {
-  // GENERAR VALOR
-  const generarValorCarta = (): number => Math.floor(Math.random() * 10) + 1;
-
   // ALMACENAR VALOR CARTA
   let almacenarValor: number = generarValorCarta();
 
   if (almacenarValor > 7) {
     almacenarValor = almacenarValor + 2;
   }
+
+  /* EJEMPLO CON ANTONIO
+  let miVariable = damePuntos(2); miVariable += almacenarValor;
+
+  console.log(miVariable);
+*/
 
   pintarCarta(almacenarValor);
 }
@@ -90,3 +80,27 @@ const botonValor = document.getElementById("botonDameCarta");
 if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
 }
+
+/* EJEMPLO CON ANTONIO
+function damePuntos(puntos: number) {
+  return puntos;
+}
+*/
+
+/* ESTO HAY QUE VOLVER A HACERLO SEGÚN LO COMENTADO CON ANTONIO
+// PUNTUACIÓN
+const puntuacion = dameCarta();
+
+// ALMACENAR PUNTUACIÓN
+const almacenarPuntuacion = puntuacion;
+
+// MOSTRAR PUNTUACIÓN EN EL DIV
+const elementoPuntuacion = document.getElementById("puntuacion");
+
+if (elementoPuntuacion) {
+  elementoPuntuacion.innerHTML = `${almacenarPuntuacion} es la puntuacion`;
+}
+
+// MOSTRAR RESULTADO PUNTUACIÓN EN CONSOLA
+console.log(almacenarPuntuacion);
+*/
