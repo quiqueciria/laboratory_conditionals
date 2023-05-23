@@ -1,77 +1,81 @@
 import "./style.css";
 
-// GENERAR VALOR
-const generarValorCarta = (): number => Math.floor(Math.random() * 10) + 1;
+let puntosTotales = 0;
 
-///////////// ----------------------------- FUNCIÓN DAME CARTA
+// GENERAR VALOR
+const generarNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
+
 function dameCarta() {
   // ALMACENAR VALOR CARTA
-  let almacenarValor: number = generarValorCarta();
+  let numeroAleatorio: number = generarNumeroAleatorio();
+  const carta: number = generarValorCarta(numeroAleatorio);
+  pintarCarta(carta);
+  calcularPuntuacion(carta);
 
-  if (almacenarValor > 7) {
-    almacenarValor = almacenarValor + 2;
+  console.log(puntosTotales);
+}
+
+function generarValorCarta(valorAleatorio: number) {
+  if (valorAleatorio > 7) {
+    return valorAleatorio + 2;
+  } else {
+    return valorAleatorio;
   }
+}
 
-  /* EJEMPLO CON ANTONIO
-  let miVariable = damePuntos(2); miVariable += almacenarValor;
-
-  console.log(miVariable);
-*/
-
-  pintarCarta(almacenarValor);
+function calcularPuntuacion(carta: number) {
+  if (carta < 7) {
+    puntosTotales = puntosTotales + carta;
+  } else {
+    puntosTotales = puntosTotales + 0.5;
+  }
 }
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
-
 function pintarCarta(cartaGenerada: number) {
+  let urlCarta: string = "";
+
   switch (cartaGenerada) {
     case 1:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/1_as-copas.jpg";
+      urlCarta = "/src/img/1_as-copas.jpg";
       break;
     case 2:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/2_dos-copas.jpg";
+      urlCarta = "/src/img/2_dos-copas.jpg";
       break;
     case 3:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/3_tres-copas.jpg";
+      urlCarta = "/src/img/3_tres-copas.jpg";
       break;
     case 4:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/4_cuatro-copas.jpg";
+      urlCarta = "/src/img/4_cuatro-copas.jpg";
       break;
     case 5:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/5_cinco-copas.jpg";
+      urlCarta = "/src/img/5_cinco-copas.jpg";
       break;
     case 6:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/6_seis-copas.jpg";
+      urlCarta = "/src/img/6_seis-copas.jpg";
       break;
     case 7:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/7_siete-copas.jpg";
+      urlCarta = "/src/img/7_siete-copas.jpg";
       break;
     case 10:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/10_sota-copas.jpg";
+      urlCarta = "/src/img/10_sota-copas.jpg";
       break;
     case 11:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/11_caballo-copas.jpg";
+      urlCarta = "/src/img/11_caballo-copas.jpg";
       break;
     case 12:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/12_rey-copas.jpg";
+      urlCarta = "/src/img/12_rey-copas.jpg";
       break;
     default:
-      (document.getElementById("cartas") as HTMLImageElement).src =
-        "/src/img/back.jpg";
+      urlCarta = "/src/img/back.jpg";
       break;
   }
-
-  console.log(cartaGenerada);
+  const imgElemento = document.getElementById("cartas");
+  if (imgElemento && imgElemento instanceof HTMLImageElement) {
+    imgElemento.src = urlCarta;
+  } else {
+    console.log("Esto da error");
+  }
 }
 
 // EL BOTÓN NOS MUESTRA EL VALOR DE LA CARTA
@@ -80,27 +84,3 @@ const botonValor = document.getElementById("botonDameCarta");
 if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
 }
-
-/* EJEMPLO CON ANTONIO
-function damePuntos(puntos: number) {
-  return puntos;
-}
-*/
-
-/* ESTO HAY QUE VOLVER A HACERLO SEGÚN LO COMENTADO CON ANTONIO
-// PUNTUACIÓN
-const puntuacion = dameCarta();
-
-// ALMACENAR PUNTUACIÓN
-const almacenarPuntuacion = puntuacion;
-
-// MOSTRAR PUNTUACIÓN EN EL DIV
-const elementoPuntuacion = document.getElementById("puntuacion");
-
-if (elementoPuntuacion) {
-  elementoPuntuacion.innerHTML = `${almacenarPuntuacion} es la puntuacion`;
-}
-
-// MOSTRAR RESULTADO PUNTUACIÓN EN CONSOLA
-console.log(almacenarPuntuacion);
-*/
