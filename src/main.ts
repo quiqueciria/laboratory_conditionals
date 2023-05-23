@@ -12,23 +12,41 @@ function dameCarta() {
   pintarCarta(carta);
   calcularPuntuacion(carta);
 
-  console.log(puntosTotales);
+  // MOSTRAR PUNTUACIÓN EN EL DIV
+  const elementoPuntuacion = document.getElementById("puntuacion");
+
+  if (elementoPuntuacion) {
+    elementoPuntuacion.innerHTML = `${puntosTotales} es la puntuacion`;
+  }
+
+  // MOSTRAR GAME OVER
+  const gameOverDiv = document.getElementById("gameover");
+
+  if (
+    gameOverDiv !== null &&
+    gameOverDiv !== undefined &&
+    puntosTotales > 7.5
+  ) {
+    gameOverDiv.innerHTML = "Game Over";
+  }
 }
 
 function generarValorCarta(valorAleatorio: number) {
-  if (valorAleatorio > 7) {
-    return valorAleatorio + 2;
-  } else {
-    return valorAleatorio;
-  }
+  return valorAleatorio > 7 ? valorAleatorio + 2 : valorAleatorio;
 }
 
 function calcularPuntuacion(carta: number) {
-  if (carta < 7) {
-    puntosTotales = puntosTotales + carta;
-  } else {
-    puntosTotales = puntosTotales + 0.5;
-  }
+  carta < 7
+    ? (puntosTotales = puntosTotales + carta)
+    : (puntosTotales = puntosTotales + 0.5);
+}
+
+// MOSTRAR EL DIV DEL GAME OVER
+
+const gameOverDiv = document.getElementById("gameover");
+
+if (gameOverDiv !== null && gameOverDiv !== undefined && puntosTotales > 7) {
+  gameOverDiv.innerHTML = "Game Over";
 }
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
