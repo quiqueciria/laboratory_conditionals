@@ -11,26 +11,77 @@ function dameCarta() {
   const carta: number = generarValorCarta(numeroAleatorio);
   pintarCarta(carta);
   calcularPuntuacion(carta);
+  finalMano();
 
-  // MOSTRAR PUNTUACIÓN EN EL DIV
-  const elementoPuntuacion = document.getElementById("puntuacion");
-
-  if (elementoPuntuacion) {
-    elementoPuntuacion.innerHTML = `${puntosTotales} es la puntuacion`;
-  }
-
-  // MOSTRAR GAME OVER
-  const gameOverDiv = document.getElementById("gameover");
+  //DESABILITAR BOTÓN
+  const desabilitarBoton = document.getElementById(
+    "botonDameCarta"
+  ) as HTMLButtonElement;
 
   if (
-    gameOverDiv !== null &&
-    gameOverDiv !== undefined &&
+    desabilitarBoton !== null &&
+    desabilitarBoton !== undefined &&
     puntosTotales > 7.5
   ) {
-    gameOverDiv.innerHTML = "Game Over";
+    desabilitarBoton.disabled = true;
+  }
+
+  // BOTÓN DE PLANTARSE
+  const botonMePlanto = document.getElementById(
+    "mePlanto"
+  ) as HTMLButtonElement;
+
+  function desabilitarBotonPlantarse() {
+    desabilitarBoton.disabled = true;
+  }
+
+  if (botonMePlanto) {
+    botonMePlanto.addEventListener("click", desabilitarBotonPlantarse);
   }
 }
 
+// MOSTRAR MENSAJES
+function mostrarMensaje(puntos: number) {
+  const elementoPuntuacion = document.getElementById("puntuacion");
+
+  if (elementoPuntuacion && elementoPuntuacion instanceof HTMLElement) {
+    elementoPuntuacion.innerHTML = `${puntos} es la puntuación`;
+  }
+}
+
+function finalMano() {
+  mostrarMensaje(puntosTotales);
+  revisarMano();
+}
+
+// REVISAR MANO
+function revisarMano() {
+  if (puntosTotales === 7.5) {
+    ganarPartida();
+  }
+  if (puntosTotales > 7.5) {
+    perderPartida();
+  }
+}
+
+// GANAR PARTIDA
+function ganarPartida() {
+  verMensaje("Enhorabuena has ganado la partida");
+}
+// GAME OVER
+function perderPartida() {
+  verMensaje("Game Over");
+}
+
+function verMensaje(mensaje: string) {
+  const gameOverDiv = document.getElementById("resultado");
+
+  if (gameOverDiv !== null && gameOverDiv !== undefined) {
+    gameOverDiv.innerHTML = mensaje;
+  }
+}
+
+// GENERAR VALOR CARTA
 function generarValorCarta(valorAleatorio: number) {
   return valorAleatorio > 7 ? valorAleatorio + 2 : valorAleatorio;
 }
@@ -39,14 +90,6 @@ function calcularPuntuacion(carta: number) {
   carta < 7
     ? (puntosTotales = puntosTotales + carta)
     : (puntosTotales = puntosTotales + 0.5);
-}
-
-// MOSTRAR EL DIV DEL GAME OVER
-
-const gameOverDiv = document.getElementById("gameover");
-
-if (gameOverDiv !== null && gameOverDiv !== undefined && puntosTotales > 7) {
-  gameOverDiv.innerHTML = "Game Over";
 }
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
