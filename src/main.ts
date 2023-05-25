@@ -5,39 +5,19 @@ let puntosTotales = 0;
 // GENERAR VALOR
 const generarNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
 
+// FUNCIÓN PRINCIPAL
 function dameCarta() {
-  // ALMACENAR VALOR CARTA
   let numeroAleatorio: number = generarNumeroAleatorio();
   const carta: number = generarValorCarta(numeroAleatorio);
   pintarCarta(carta);
   calcularPuntuacion(carta);
   finalMano();
+  plantarse();
+}
 
-  //DESABILITAR BOTÓN
-  const desabilitarBoton = document.getElementById(
-    "botonDameCarta"
-  ) as HTMLButtonElement;
-
-  if (
-    desabilitarBoton !== null &&
-    desabilitarBoton !== undefined &&
-    puntosTotales > 7.5
-  ) {
-    desabilitarBoton.disabled = true;
-  }
-
-  // BOTÓN DE PLANTARSE
-  const botonMePlanto = document.getElementById(
-    "mePlanto"
-  ) as HTMLButtonElement;
-
-  function desabilitarBotonPlantarse() {
-    desabilitarBoton.disabled = true;
-  }
-
-  if (botonMePlanto) {
-    botonMePlanto.addEventListener("click", desabilitarBotonPlantarse);
-  }
+function finalMano() {
+  mostrarMensaje(puntosTotales);
+  revisarMano();
 }
 
 // MOSTRAR MENSAJES
@@ -49,11 +29,6 @@ function mostrarMensaje(puntos: number) {
   }
 }
 
-function finalMano() {
-  mostrarMensaje(puntosTotales);
-  revisarMano();
-}
-
 // REVISAR MANO
 function revisarMano() {
   if (puntosTotales === 7.5) {
@@ -61,6 +36,19 @@ function revisarMano() {
   }
   if (puntosTotales > 7.5) {
     perderPartida();
+  }
+}
+// BOTÓN PLANTARSE
+function plantarse() {
+  const botonMePlanto = document.getElementById(
+    "mePlanto"
+  ) as HTMLButtonElement;
+
+  if (botonMePlanto) {
+    botonMePlanto.addEventListener("click", apagarBoton);
+  }
+  if (botonMePlanto) {
+    botonMePlanto.addEventListener("click", mensajePlantarse);
   }
 }
 
@@ -71,13 +59,50 @@ function ganarPartida() {
 // GAME OVER
 function perderPartida() {
   verMensaje("Game Over");
+  apagarBoton();
 }
 
+//VER MENSAJES
 function verMensaje(mensaje: string) {
   const gameOverDiv = document.getElementById("resultado");
 
   if (gameOverDiv !== null && gameOverDiv !== undefined) {
     gameOverDiv.innerHTML = mensaje;
+  }
+}
+
+// MENSAJE PLANTARSE
+function mensajePlantarse() {
+  if (puntosTotales < 4) {
+    verMensaje("Has sido muy conservador");
+  }
+  if (puntosTotales > 3.5 && puntosTotales < 6) {
+    verMensaje("Te ha entrado el canguelo eh?");
+  }
+  if (puntosTotales > 5.5 && puntosTotales < 7.5) {
+    verMensaje("Casi casí...");
+  }
+}
+
+//DESHABILITAR BOTON
+function apagarBoton() {
+  const deshabilitarBoton = document.getElementById(
+    "botonDameCarta"
+  ) as HTMLButtonElement;
+
+  if (deshabilitarBoton !== null && deshabilitarBoton !== undefined) {
+    deshabilitarBoton.disabled = true;
+  }
+}
+
+// HABILITAR BOTÓN
+function encenderBoton() {
+  const habilitarBoton = document.getElementById(
+    "botonDameCarta"
+  ) as HTMLButtonElement;
+
+  if (habilitarBoton !== null && habilitarBoton !== undefined) {
+    habilitarBoton.disabled = false;
   }
 }
 
@@ -91,6 +116,13 @@ function calcularPuntuacion(carta: number) {
     ? (puntosTotales = puntosTotales + carta)
     : (puntosTotales = puntosTotales + 0.5);
 }
+
+/* SEGUIR CON EL RESET DEL BOTÓN
+// PONER PUNTUACIÓN A CERO
+function resetPuntuacion() {
+  puntosTotales;
+}
+*/
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
 function pintarCarta(cartaGenerada: number) {
@@ -144,4 +176,17 @@ const botonValor = document.getElementById("botonDameCarta");
 
 if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
+}
+
+// BOTÓN NUEVA PARTIDA
+const botonNuevaPartida = document.getElementById("nuevaPartida");
+
+if (botonNuevaPartida) {
+  botonNuevaPartida.addEventListener("click", resetPartida);
+}
+
+// EMPEZAR PARTIDA
+function resetPartida() {
+  encenderBoton();
+  resetPuntuacion();
 }
