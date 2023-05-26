@@ -124,6 +124,7 @@ const botonValor = document.getElementById("botonDameCarta");
 if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
 }
+
 // DESHABILITAR BOTON DAME CARTA
 function apagarBoton() {
   const deshabilitarBoton = document.getElementById(
