@@ -1,6 +1,7 @@
 import "./style.css";
 
 let puntosTotales = 0;
+apagarFuturo();
 
 // GENERAR VALOR
 const generarNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
@@ -50,6 +51,9 @@ function plantarse() {
   if (botonMePlanto) {
     botonMePlanto.addEventListener("click", mensajePlantarse);
   }
+  if (botonMePlanto) {
+    botonMePlanto.addEventListener("click", encenderFuturo);
+  }
 }
 
 // GANAR PARTIDA
@@ -80,11 +84,14 @@ function mensajePlantarse() {
     verMensaje("Te ha entrado el canguelo eh?");
   }
   if (puntosTotales > 5.5 && puntosTotales < 7.5) {
-    verMensaje("Casi casí...");
+    verMensaje("Casi, casi...");
+  }
+  if (puntosTotales === 0) {
+    verMensaje("");
   }
 }
 
-//DESHABILITAR BOTON
+//DESHABILITAR BOTON DAME CARTA
 function apagarBoton() {
   const deshabilitarBoton = document.getElementById(
     "botonDameCarta"
@@ -116,13 +123,6 @@ function calcularPuntuacion(carta: number) {
     ? (puntosTotales = puntosTotales + carta)
     : (puntosTotales = puntosTotales + 0.5);
 }
-
-/* SEGUIR CON EL RESET DEL BOTÓN
-// PONER PUNTUACIÓN A CERO
-function resetPuntuacion() {
-  puntosTotales;
-}
-*/
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
 function pintarCarta(cartaGenerada: number) {
@@ -184,9 +184,46 @@ const botonNuevaPartida = document.getElementById("nuevaPartida");
 if (botonNuevaPartida) {
   botonNuevaPartida.addEventListener("click", resetPartida);
 }
+if (botonNuevaPartida) {
+  botonNuevaPartida.addEventListener("click", mensajePlantarse);
+}
 
 // EMPEZAR PARTIDA
 function resetPartida() {
   encenderBoton();
   resetPuntuacion();
+}
+
+function resetPuntuacion() {
+  puntosTotales === 0;
+  mostrarMensaje((puntosTotales = 0));
+}
+
+//BOTON FUTURO
+const botonFuturo = document.getElementById("botonFuturo");
+
+if (botonFuturo) {
+  botonFuturo.addEventListener("click", dameCarta);
+}
+
+//DESHABILITAR BOTON FUTURO
+function apagarFuturo() {
+  const deshabilitarBoton = document.getElementById(
+    "botonFuturo"
+  ) as HTMLButtonElement;
+
+  if (deshabilitarBoton !== null && deshabilitarBoton !== undefined) {
+    deshabilitarBoton.disabled = true;
+  }
+}
+
+// HABILITAR BOTÓN FUTURO
+function encenderFuturo() {
+  const habilitarBoton = document.getElementById(
+    "botonFuturo"
+  ) as HTMLButtonElement;
+
+  if (habilitarBoton !== null && habilitarBoton !== undefined) {
+    habilitarBoton.disabled = false;
+  }
 }
