@@ -1,7 +1,7 @@
 import "./style.css";
 
 let puntosTotales = 0;
-apagarBotonFuturo();
+habilitarBotonQueHubieraPasado(true);
 
 // GENERAR VALOR
 const generarNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
@@ -10,7 +10,7 @@ const generarNumeroAleatorio = (): number => Math.floor(Math.random() * 10) + 1;
 function dameCarta() {
   let numeroAleatorio: number = generarNumeroAleatorio();
   const carta: number = generarValorCarta(numeroAleatorio);
-  pintarCarta(carta);
+  pintarUrlCarta(carta);
   calcularPuntuacion(carta);
   finalMano();
 }
@@ -19,14 +19,14 @@ function dameCarta() {
 function finalMano() {
   mostrarMensaje(puntosTotales);
   revisarMano();
-  plantarse();
 }
 
 // EMPEZAR PARTIDA
 function resetPartida() {
-  encenderBoton();
+  habilitarBotonDameCarta(false);
   resetPuntuacion();
-  apagarBotonFuturo();
+  verMensaje("");
+  habilitarBotonQueHubieraPasado(true);
 }
 
 // MOSTRAR MENSAJE DE PUNTUACIÓN SOLO
@@ -55,26 +55,25 @@ function ganarPartida() {
 // GAME OVER
 function perderPartida() {
   verMensaje("Game Over");
-  apagarBoton();
+  habilitarBotonDameCarta(true);
+}
+
+// PLANTARSE
+function plantarse() {
+  habilitarBotonDameCarta(true);
+  mensajePlantarse();
+  habilitarBotonQueHubieraPasado(false);
 }
 
 // BOTÓN PLANTARSE
-function plantarse() {
-  const botonMePlanto = document.getElementById(
-    "mePlanto"
-  ) as HTMLButtonElement;
-
-  if (botonMePlanto) {
-    botonMePlanto.addEventListener("click", apagarBoton);
-  }
-  if (botonMePlanto) {
-    botonMePlanto.addEventListener("click", mensajePlantarse);
-  }
-  if (botonMePlanto) {
-    botonMePlanto.addEventListener("click", encenderFuturo);
-  }
+const botonPlantarse = document.getElementById("mePlanto");
+if (
+  botonPlantarse !== null &&
+  botonPlantarse !== undefined &&
+  botonPlantarse instanceof HTMLButtonElement
+) {
+  botonPlantarse.addEventListener("click", plantarse);
 }
-
 //VER MENSAJES DE PLANTARSE
 function verMensaje(mensaje: string) {
   const gameOverDiv = document.getElementById("resultado");
@@ -116,6 +115,7 @@ function calcularPuntuacion(carta: number) {
 function resetPuntuacion() {
   puntosTotales === 0;
   mostrarMensaje((puntosTotales = 0));
+  pintarUrlCarta(0);
 }
 
 // BOTÓN DAME CARTA NOS MUESTRA EL VALOR DE LA CARTA Y PASA CARTA
@@ -125,25 +125,15 @@ if (botonValor) {
   botonValor.addEventListener("click", dameCarta);
 }
 
-// DESHABILITAR BOTON DAME CARTA
-function apagarBoton() {
-  const deshabilitarBoton = document.getElementById(
-    "botonDameCarta"
-  ) as HTMLButtonElement;
+function habilitarBotonDameCarta(estaHabilitado: boolean) {
+  const habilitarBoton = document.getElementById("botonDameCarta");
 
-  if (deshabilitarBoton !== null && deshabilitarBoton !== undefined) {
-    deshabilitarBoton.disabled = true;
-  }
-}
-
-// HABILITAR BOTÓN DAME CARTA
-function encenderBoton() {
-  const habilitarBoton = document.getElementById(
-    "botonDameCarta"
-  ) as HTMLButtonElement;
-
-  if (habilitarBoton !== null && habilitarBoton !== undefined) {
-    habilitarBoton.disabled = false;
+  if (
+    habilitarBoton !== null &&
+    habilitarBoton !== undefined &&
+    habilitarBoton instanceof HTMLButtonElement
+  ) {
+    habilitarBoton.disabled = estaHabilitado;
   }
 }
 
@@ -158,36 +148,25 @@ if (botonNuevaPartida) {
 }
 
 //BOTON QUE HUBIERA PASADO
-const botonFuturo = document.getElementById("botonFuturo");
+const botonFuturo = document.getElementById("botonFuturo") as HTMLButtonElement;
 
 if (botonFuturo) {
   botonFuturo.addEventListener("click", dameCarta);
 }
 
-//DESHABILITAR BOTON QUE HUBIERA PASADO
-function apagarBotonFuturo() {
-  const deshabilitarBoton = document.getElementById(
-    "botonFuturo"
-  ) as HTMLButtonElement;
-
-  if (deshabilitarBoton !== null && deshabilitarBoton !== undefined) {
-    deshabilitarBoton.disabled = true;
-  }
-}
-
-// HABILITAR BOTÓN QUE HUBIERA PASADO
-function encenderFuturo() {
-  const habilitarBoton = document.getElementById(
-    "botonFuturo"
-  ) as HTMLButtonElement;
-
-  if (habilitarBoton !== null && habilitarBoton !== undefined) {
-    habilitarBoton.disabled = false;
+function habilitarBotonQueHubieraPasado(estaHabilitado: boolean) {
+  const habilitarBoton = document.getElementById("botonFuturo");
+  if (
+    habilitarBoton !== null &&
+    habilitarBoton !== undefined &&
+    habilitarBoton instanceof HTMLButtonElement
+  ) {
+    habilitarBoton.disabled = estaHabilitado;
   }
 }
 
 //MOSTRAR LAS CARTAS Y ASIGNARLE EL VALOR
-function pintarCarta(cartaGenerada: number) {
+function obtenerUrlCarta(cartaGenerada: number) {
   let urlCarta: string = "";
 
   switch (cartaGenerada) {
@@ -225,6 +204,11 @@ function pintarCarta(cartaGenerada: number) {
       urlCarta = "/src/img/back.jpg";
       break;
   }
+  return urlCarta;
+}
+
+function pintarUrlCarta(carta: number) {
+  const urlCarta = obtenerUrlCarta(carta);
   const imgElemento = document.getElementById("cartas");
   if (imgElemento && imgElemento instanceof HTMLImageElement) {
     imgElemento.src = urlCarta;
