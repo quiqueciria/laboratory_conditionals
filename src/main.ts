@@ -10,7 +10,8 @@ function dameCarta() {
   let numeroAleatorio: number = generarNumeroAleatorio();
   const carta: number = generarValorCarta(numeroAleatorio);
   pintarUrlCarta(carta);
-  calcularPuntuacion(carta);
+  const puntos = calcularPuntuacion(carta);
+  setPuntos(puntos);
   finalMano();
 }
 
@@ -96,9 +97,12 @@ function generarValorCarta(valorAleatorio: number) {
 
 // CALCULAR PUNTUACIÓN
 function calcularPuntuacion(carta: number) {
-  carta < 7
-    ? (puntosTotales = puntosTotales + carta)
-    : (puntosTotales = puntosTotales + 0.5);
+  return carta < 7 ? puntosTotales + carta : puntosTotales + 0.5;
+}
+
+// RECIBIR VALORES SUMADOS Y AÑADIR A PUNTOS TOTALES
+function setPuntos(puntos: number) {
+  puntosTotales = puntos;
 }
 
 // PUNTUACIÓN A CERO OTRA VEZ
